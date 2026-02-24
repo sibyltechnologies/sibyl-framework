@@ -1,5 +1,5 @@
 {
-  "name": "frappe-framework",
+  "name": "sibyl",
   "scripts": {
     "build": "node esbuild",
     "production": "node esbuild --production",
@@ -10,15 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/frappe/frappe.git"
   },
-  "author": "Frappe Technologies Pvt. Ltd.",
+  "author": "Sibyl Technologies",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/frappe/frappe/issues"
+    "url": "https://github.com/sibyltechnologies"
   },
   "engines": {
     "node": ">=24"
   },
-  "homepage": "https://frappeframework.com",
+  "homepage": "www.sibyl.pk",
   "dependencies": {
     "@editorjs/editorjs": "^2.28.2",
     "@frappe/esbuild-plugin-postcss2": "^0.1.3",
