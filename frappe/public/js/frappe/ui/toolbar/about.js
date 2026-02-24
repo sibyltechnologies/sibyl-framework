@@ -5,40 +5,40 @@ frappe.ui.misc.about = function () {
 		return;
 	}
 
-	const dialog = new frappe.ui.Dialog({ title: __("Frappe Framework") });
+	const dialog = new frappe.ui.Dialog({ title: __("Sibyl") });
 
 	$(dialog.body).html(
 		`<div>
-				<p>${__("Open Source Applications for the Web")}</p>
+				<p>${__("Full Stack Development Framework by Sibyl")}</p>
 
 				<p>
 					<i class='fa fa-globe fa-fw'></i>
 					${__("Website")}:
-					<a href='https://frappe.io/' target='_blank'>https://frappe.io/</a>
+					<a href='https://sibyl.pk/' target='_blank'>https://sibyl.pk/</a>
 				</p>
 
 				<p>
 					<i class='fa fa-github fa-fw'></i>
 					${__("Source Code")}:
-					<a href='https://github.com/frappe' target='_blank'>https://github.com/frappe</a>
+					<a href='https://github.com/sibyltechnologies' target='_blank'>https://github.com/sibyltechnologies</a>
 				</p>
 
 				<p>
 					<i class='fa fa-file-text fa-fw'></i>
 					${__("Frappe Blog")}:
-					<a href='https://frappe.io/blog' target='_blank'>https://frappe.io/blog</a>
+					<a href='https://sibyl.pk/insights' target='_blank'>https://sibyl.pk/insights</a>
 				</p>
 
 				<p>
 					<i class='fa fa-users fa-fw'></i>
-					${__("Frappe Forum")}:
-					<a href='https://discuss.frappe.io' target='_blank'>https://discuss.frappe.io</a>
+					${__("Sibyl Forum")}:
+					<a href='https://sibyl.pk' target='_blank'>https://sibyl.pk</a>
 				</p>
 
 				<p>
 					<i class='fa fa-linkedin fa-fw'></i>
 					${__("LinkedIn")}:
-					<a href='https://linkedin.com/company/frappe-tech' target='_blank'>https://linkedin.com/company/frappe-tech</a>
+					<a href='https://linkedin.com/company/sibyltechnologiespk' target='_blank'>https://linkedin.com/company/sibyltechnologiespk</a>
 				</p>
 
 				<p>
@@ -46,19 +46,19 @@ frappe.ui.misc.about = function () {
 						<path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
 					</svg>
 					X:
-					<a href='https://x.com/frappetech' target='_blank'>https://x.com/frappetech</a>
+					<a href='https://x.com/sibyltechnologiespk' target='_blank'>https://x.com/sibyltechnologiespk</a>
 				</p>
 
 				<p>
 					<i class='fa fa-youtube-play fa-fw'></i>
 					${__("YouTube")}:
-					<a href='https://www.youtube.com/@frappetech' target='_blank'>https://www.youtube.com/@frappetech</a>
+					<a href='https://www.youtube.com/@outbox' target='_blank'>https://www.youtube.com/@outbox</a>
 				</p>
 
 				<p>
 					<i class='fa fa-instagram fa-fw'></i>
 					${__("Instagram")}:
-					<a href='https://www.instagram.com/frappetech' target='_blank'>https://www.instagram.com/frappetech</a>
+					<a href='https://www.instagram.com/sibyltechnologiespk' target='_blank'>https://www.instagram.com/sibyltechnologiespk</a>
 				</p>
 
 				<hr>
@@ -83,7 +83,7 @@ frappe.ui.misc.about = function () {
 
 				<hr>
 
-				<p class='text-muted'>${__("&copy; Frappe Technologies Pvt. Ltd. and contributors")} </p>
+				<p class='text-muted'>${__("&copy; Sibyl Technologies")} </p>
 			</div>`
 	);
 
