@@ -7,7 +7,7 @@ app_title = "Sibyl"
 app_publisher = "Sibyl Technologies"
 app_description = "Full stack web framework by Sibyl Technologies"
 app_license = "MIT"
-app_logo_url = "/assets/frappe/images/frappe-framework-logo.svg"
+app_logo_url = "/assets/frappe/images/sibyl-logo.png"
 develop_version = "15.x.x-develop"
 app_home = "/app/build"
 
