@@ -459,7 +459,7 @@ class DesktopPage {
 			},
 			{
 				icon: "support",
-				label: "Frappe Support",
+				label: "Sibyl Support",
 				onClick: function () {
 					window.open("https://support.sibyl.pk/help", "_blank");
 				},
