@@ -25,7 +25,7 @@ frappe.ui.misc.about = function () {
 
 				<p>
 					<i class='fa fa-file-text fa-fw'></i>
-					${__("Frappe Blog")}:
+					${__("Sibyl Blog")}:
 					<a href='https://sibyl.pk/insights' target='_blank'>https://sibyl.pk/insights</a>
 				</p>
 

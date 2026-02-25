@@ -37,7 +37,7 @@ $(document).ready(function () {
 					"sidebar-card-button-outline": "var(--ink-gray-7)",
 				},
 				primary_action: () => {
-					openFrappeCloudDashboard();
+					openSibylCloudDashboard();
 				},
 			});
 		}
@@ -55,7 +55,7 @@ $(document).ready(function () {
 				addManageBillingDropdown(data.desktop);
 
 				$(".login-to-fc, .upgrade-plan-button").on("click", function () {
-					openFrappeCloudDashboard();
+					openSibylCloudDashboard();
 				});
 			}
 		});
@@ -74,11 +74,11 @@ function addManageBillingDropdown(desktop) {
 			return frappe.boot.is_fc_site;
 		},
 		onClick: function () {
-			return openFrappeCloudDashboard();
+			return openSibylCloudDashboard();
 		},
 	});
 }
-function openFrappeCloudDashboard() {
+function openSibylCloudDashboard() {
 	window.open(
 		`${frappeCloudBaseEndpoint}/dashboard/sites/${frappe.boot.site_info.name}`,
 		"_blank"
