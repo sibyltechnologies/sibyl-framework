@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, Sibyl Technologies Technologies
 # License: MIT. See LICENSE
 
 
@@ -50,7 +50,7 @@ def get_context(context):
 	context["disable_user_pass_login"] = cint(frappe.get_system_settings("disable_user_pass_login"))
 	context["logo"] = get_app_logo()
 	context["app_name"] = (
-		frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or _("Frappe")
+		frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or _("SIBYL")
 	)
 
 	signup_form_template = frappe.get_hooks("signup_form_template")
@@ -150,7 +150,7 @@ def send_login_link(email: str):
 	link = _generate_temporary_login_link(email, expiry)
 
 	app_name = (
-		frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or _("Frappe")
+		frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or _("SIBYL")
 	)
 
 	subject = _("Login To {0}").format(app_name)
