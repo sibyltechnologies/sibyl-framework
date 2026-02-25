@@ -505,7 +505,7 @@ standard_help_items = [
 		"is_standard": 1,
 	},
 	{
-		"item_label": "Frappe Support",
+		"item_label": "Sibyl Support",
 		"item_type": "Route",
 		"route": "https://sibyl.pk/support",
 		"is_standard": 1,
