@@ -1,6 +1,6 @@
 # Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
-# Author - Shivam Mishra <shivam@frappe.io>
+# Author - Shivam Mishra <shivam@sibyl.pk>
 
 from functools import wraps
 from json import JSONDecodeError, dumps, loads

@@ -88,6 +88,6 @@ def _app_title(app_name):
 
 def get_feed(since):
 	"""'What's New' feed implementation for Frappe"""
-	r = requests.get(f"https://frappe.io/api/method/changelog_feed?since={since}")
+	r = requests.get(f"https://sibyl.pk/api/method/changelog_feed?since={since}")
 	r.raise_for_status()
 	return r.json()["message"]

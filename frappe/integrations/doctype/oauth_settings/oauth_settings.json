@@ -45,7 +45,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "https://docs.frappe.io/framework",
+   "default": "https://docs.sibyl.pk/framework",
    "description": "URL of a human-readable page with info that developers might need.",
    "fieldname": "resource_documentation",
    "fieldtype": "Data",
@@ -132,7 +132,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "description": "New line separated list of allowed public client URLs (eg <code>https://frappe.io</code>), or <code>*</code> to accept all.\n<br>\nPublic clients are restricted by default.",
+   "description": "New line separated list of allowed public client URLs (eg <code>https://sibyl.pk</code>), or <code>*</code> to accept all.\n<br>\nPublic clients are restricted by default.",
    "fieldname": "allowed_public_client_origins",
    "fieldtype": "Small Text",
    "label": "Allowed Public Client Origins"

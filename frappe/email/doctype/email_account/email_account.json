@@ -506,7 +506,7 @@
   },
   {
    "default": "0",
-   "documentation_url": "https://docs.frappe.io/erpnext/user/manual/en/linking-emails-to-document",
+   "documentation_url": "https://docs.sibyl.pk/erpnext/user/manual/en/linking-emails-to-document",
    "fieldname": "enable_automatic_linking",
    "fieldtype": "Check",
    "hide_days": 1,

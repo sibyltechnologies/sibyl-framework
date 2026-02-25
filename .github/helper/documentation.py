@@ -5,13 +5,13 @@ import requests
 
 WEBSITE_REPOS = [
 	"erpnext_com",
-	"frappe_io",
+	"sibyl.pk",
 ]
 
 DOCUMENTATION_DOMAINS = [
 	"docs.erpnext.com",
-	"frappeframework.com",
-	"docs.frappe.io",
+	"sibyl.pk",
+	"docs.sibyl.pk",
 ]
 
 

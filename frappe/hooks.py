@@ -11,7 +11,7 @@ app_logo_url = "/assets/frappe/images/frappe-framework-logo.svg"
 develop_version = "15.x.x-develop"
 app_home = "/app/build"
 
-app_email = "developers@frappe.io"
+app_email = "developers@sibyl.pk"
 
 before_install = "frappe.utils.install.before_install"
 after_install = "frappe.utils.install.after_install"
@@ -507,7 +507,7 @@ standard_help_items = [
 	{
 		"item_label": "Frappe Support",
 		"item_type": "Route",
-		"route": "https://frappe.io/support",
+		"route": "https://sibyl.pk/support",
 		"is_standard": 1,
 	},
 ]

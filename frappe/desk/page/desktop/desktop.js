@@ -461,7 +461,7 @@ class DesktopPage {
 				icon: "support",
 				label: "Frappe Support",
 				onClick: function () {
-					window.open("https://support.frappe.io/help", "_blank");
+					window.open("https://support.sibyl.pk/help", "_blank");
 				},
 			},
 			{
