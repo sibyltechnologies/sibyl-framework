@@ -1,235 +1,469 @@
 {% extends "templates/web.html" %}
 {% block navbar %}{% endblock %}
-
-{% macro email_login_body() -%}
-{% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
-<div class="page-card-body">
-	<div class="form-group">
-		<label class="form-label sr-only" for="login_email">{{ login_label or _("Email")}}</label>
-		<div class="email-field">
-			<input type="text" id="login_email" class="form-control"
-				placeholder="{% if login_name_placeholder %}{{ login_name_placeholder  }}{% else %}{{ _('jane@example.com') }}{% endif %}"
-				required autofocus autocomplete="username">
-
-			<svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-				xmlns="http://www.w3.org/2000/svg">
-				<use class="es-lock" href="#es-line-email"></use>
-			</svg>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="form-label sr-only" for="login_password">{{ _("Password") }}</label>
-		<div class="password-field">
-			<input type="password" id="login_password" class="form-control" placeholder="•••••"
-				autocomplete="current-password" required>
-
-			<svg class="field-icon password-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-				xmlns="http://www.w3.org/2000/svg">
-					<use class="es-lock" href="#es-line-lock"></use>
-			</svg>
-			<span toggle="#login_password" class="toggle-password text-muted">{{ _('Show') }}</span>
-		</div>
-	</div>
-
-	{% if not disable_user_pass_login %}
-	<p class="forgot-password-message">
-		<a href="#forgot">{{ _("Forgot Password?") }}</a>
-	</p>
-	{% endif %}
-</div>
-{% endif %}
-<div class="page-card-actions">
-	{% if not disable_user_pass_login %}
-	<button class="btn btn-sm btn-primary btn-block btn-login" type="submit">
-		{{ _("Login") }}</button>
-	{% endif %}
-	{% if ldap_settings and ldap_settings.enabled %}
-	<button class="btn btn-sm {{ "btn-primary" if disable_user_pass_login else "btn-default" }} btn-block btn-login btn-ldap-login">
-		{{ _("Login with LDAP") }}</button>
-	{% endif %}
-</div>
-{% endmacro %}
+{% block sidebar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block page_footer %}{% endblock %}
 
 {% block head_include %}
 {{ include_style('login.bundle.css') }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<!-- SEO -->
+<meta name="description" content="Sign in to SIBYLERP — Pakistan's enterprise-grade ERP platform. Manage finance, operations, HR, inventory and more from a single unified system.">
+<meta name="keywords" content="SIBYLERP login, ERP software Pakistan, enterprise resource planning, business management software, Sibyl Technologies">
+<meta name="author" content="Sibyl Technologies">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a1628">
+<link rel="canonical" href="https://erp.sibyl.pk/login">
+<!-- GEO -->
+<meta name="geo.region" content="PK">
+<meta name="geo.placename" content="Pakistan">
+<meta name="geo.position" content="30.3753;69.3451">
+<meta name="ICBM" content="30.3753, 69.3451">
+<meta name="coverage" content="Worldwide">
+<!-- OG -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://erp.sibyl.pk/login">
+<meta property="og:title" content="Sign In — SIBYLERP Enterprise ERP">
+<meta property="og:description" content="Access your SIBYLERP dashboard. Enterprise ERP for finance, HR, operations and inventory.">
+<meta property="og:site_name" content="SIBYLERP">
+<meta property="og:locale" content="en_PK">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@sibyltechnologies">
+<meta name="twitter:title" content="Sign In — SIBYLERP Enterprise ERP">
+<!-- Structured Data -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://sibyl.pk/#org","name":"Sibyl Technologies","url":"https://sibyl.pk","sameAs":["https://linkedin.com/company/sibyltechnologiespk","https://github.com/sibyltechnologies"]},{"@type":"SoftwareApplication","name":"SIBYLERP","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Enterprise ERP software for businesses in Pakistan.","publisher":{"@id":"https://sibyl.pk/#org"}}]}
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:#0a1628; --navy-mid:#112240; --navy-light:#1a3460;
+    --accent:#2f6fd4; --glow:#3d80f0;
+    --white:#fff; --muted:#8a9bbf;
+    --border:rgba(255,255,255,0.08); --input-bg:rgba(255,255,255,0.04);
+    --shadow:0 32px 80px rgba(0,0,0,0.5);
+    --shadow-btn:0 8px 24px rgba(47,111,212,0.45);
+    --r:8px; --r-lg:22px;
+  }
+  html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body {
+    min-height:100vh; min-height:100dvh;
+    font-family:'DM Sans',sans-serif;
+    background:var(--navy); color:var(--white);
+    overflow-x:hidden; display:flex; flex-direction:column;
+  }
+
+  /* skip link */
+  .skip-link { position:absolute; top:-40px; left:16px; background:var(--accent); color:#fff; padding:8px 16px; border-radius:0 0 8px 8px; font-size:13px; z-index:9999; transition:top 0.2s; text-decoration:none; }
+  .skip-link:focus { top:0; }
+
+  /* bg */
+  .bg-layer { position:fixed; inset:0; z-index:0; background: radial-gradient(ellipse 80% 60% at 15% 20%,rgba(47,111,212,.18) 0%,transparent 60%), radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,52,96,.4) 0%,transparent 55%), linear-gradient(160deg,#0a1628 0%,#0d1f3c 50%,#091525 100%); }
+  .bg-grid { position:fixed; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(47,111,212,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(47,111,212,.04) 1px,transparent 1px); background-size:48px 48px; }
+  .bg-orb { position:fixed; border-radius:50%; filter:blur(90px); z-index:0; pointer-events:none; }
+  .bg-orb-1 { width:500px;height:500px;top:-100px;left:-100px;background:radial-gradient(circle,rgba(47,111,212,.12) 0%,transparent 70%);animation:f1 18s ease-in-out infinite; }
+  .bg-orb-2 { width:400px;height:400px;bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(30,77,140,.15) 0%,transparent 70%);animation:f2 22s ease-in-out infinite; }
+  @keyframes f1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+  @keyframes f2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-40px)}}
+
+  /* navbar */
+  .s-navbar { position:relative; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:64px; border-bottom:1px solid var(--border); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); background:rgba(10,22,40,.75); animation:sD .5s ease both; flex-shrink:0; }
+  .s-brand { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
+  .s-brand-logo { height:32px; width:auto; display:block; object-fit:contain; }
+  .s-brand-fallback { width:34px; height:34px; display:none; flex-shrink:0; background:linear-gradient(135deg,var(--accent),var(--navy-light)); border-radius:9px; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; box-shadow:0 4px 14px rgba(47,111,212,.4); }
+  .s-brand-name { font-family:'Sora',sans-serif; font-weight:600; font-size:17px; color:#fff; letter-spacing:.2px; white-space:nowrap; }
+  .s-brand-name em { color:var(--glow); font-style:normal; }
+  .s-nav-center { display:flex; align-items:center; gap:4px; position:absolute; left:50%; transform:translateX(-50%); }
+  .s-nav-link { color:var(--muted); text-decoration:none; font-size:13.5px; padding:7px 14px; border-radius:var(--r); transition:color .2s,background .2s; white-space:nowrap; }
+  .s-nav-link:hover { color:#fff; background:rgba(255,255,255,.05); }
+  .s-nav-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .s-nav-btn { display:inline-flex; align-items:center; gap:6px; color:#fff; text-decoration:none; font-size:13px; font-weight:500; padding:8px 18px; border-radius:var(--r); background:linear-gradient(135deg,rgba(47,111,212,.25),rgba(26,52,96,.3)); border:1px solid rgba(47,111,212,.4); transition:all .2s; white-space:nowrap; }
+  .s-nav-btn:hover { background:rgba(47,111,212,.38); border-color:var(--accent); }
+  .s-hamburger { display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:6px; border-radius:6px; }
+  .s-hamburger span { display:block; width:20px; height:2px; background:var(--muted); border-radius:2px; transition:all .3s; }
+  .s-mobile-menu { display:none; position:absolute; top:64px; left:0; right:0; background:rgba(10,22,40,.97); border-bottom:1px solid var(--border); padding:12px 20px; z-index:99; backdrop-filter:blur(16px); }
+  .s-mobile-menu.open { display:block; }
+  .s-mobile-menu a { display:block; padding:12px 8px; color:var(--muted); text-decoration:none; font-size:14px; border-bottom:1px solid rgba(255,255,255,.05); transition:color .2s; }
+  .s-mobile-menu a:last-child { border-bottom:none; }
+  .s-mobile-menu a:hover { color:#fff; }
+
+  /* main */
+  .s-main { position:relative; z-index:5; flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+
+  /* card */
+  .s-card { display:flex; width:100%; max-width:940px; background:rgba(17,34,64,.72); border:1px solid var(--border); border-radius:var(--r-lg); backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px); box-shadow:var(--shadow); overflow:hidden; animation:fU .65s ease .15s both; }
+
+  /* left panel */
+  .s-left { flex:1; padding:52px 44px; background:linear-gradient(160deg,rgba(30,77,140,.28) 0%,rgba(10,22,40,.05) 100%); border-right:1px solid var(--border); display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+  .s-left::after { content:''; position:absolute; bottom:-80px; right:-80px; width:280px; height:280px; background:radial-gradient(circle,rgba(47,111,212,.1) 0%,transparent 70%); border-radius:50%; pointer-events:none; }
+  .s-badge { display:inline-flex; align-items:center; gap:7px; background:rgba(47,111,212,.14); border:1px solid rgba(47,111,212,.28); border-radius:20px; padding:5px 14px; font-size:11.5px; font-weight:500; color:var(--glow); letter-spacing:.6px; text-transform:uppercase; margin-bottom:26px; width:fit-content; }
+  .s-badge::before { content:''; width:6px; height:6px; background:var(--glow); border-radius:50%; box-shadow:0 0 8px var(--glow); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .s-heading { font-family:'Sora',sans-serif; font-size:32px; font-weight:700; line-height:1.22; letter-spacing:-.4px; color:#fff; margin-bottom:14px; }
+  .s-heading em { font-style:normal; background:linear-gradient(90deg,var(--glow),#85c0ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .s-sub { font-size:14px; line-height:1.75; color:var(--muted); margin-bottom:36px; max-width:310px; }
+  .s-features { display:flex; flex-direction:column; gap:12px; list-style:none; padding:0; }
+  .s-feature { display:flex; align-items:center; gap:12px; font-size:13.5px; color:rgba(255,255,255,.68); }
+  .s-dot { width:30px; height:30px; flex-shrink:0; background:rgba(47,111,212,.18); border:1px solid rgba(47,111,212,.3); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+
+  /* right panel */
+  .s-right { width:390px; flex-shrink:0; padding:52px 42px; display:flex; flex-direction:column; justify-content:center; }
+  .s-form-head { text-align:center; margin-bottom:34px; }
+  .s-form-title { font-family:'Sora',sans-serif; font-size:23px; font-weight:600; color:#fff; margin-bottom:5px; letter-spacing:-.3px; }
+  .s-form-sub { font-size:13.5px; color:var(--muted); }
+
+  /* form elements — prefixed to avoid conflicts with frappe CSS */
+  .s-group { margin-bottom:18px; }
+  .s-label { display:block; font-size:11.5px; font-weight:500; color:rgba(255,255,255,.55); letter-spacing:.5px; margin-bottom:7px; text-transform:uppercase; }
+  .s-input { width:100%; padding:12px 15px; background:var(--input-bg); border:1px solid rgba(255,255,255,.1); border-radius:var(--r); color:#fff; font-size:14.5px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color .2s,background .2s,box-shadow .2s; -webkit-appearance:none; appearance:none; }
+  .s-input::placeholder { color:rgba(255,255,255,.22); }
+  .s-input:focus { border-color:var(--accent); background:rgba(47,111,212,.07); box-shadow:0 0 0 3px rgba(47,111,212,.14); }
+  .s-input:-webkit-autofill { -webkit-box-shadow:0 0 0 100px #112240 inset; -webkit-text-fill-color:#fff; }
+
+  .s-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+  .s-check { display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .s-check input[type="checkbox"] { width:15px; height:15px; accent-color:var(--accent); cursor:pointer; }
+  .s-check span { font-size:13px; color:var(--muted); user-select:none; }
+  .s-forgot { font-size:13px; color:var(--glow); text-decoration:none; transition:opacity .2s; }
+  .s-forgot:hover { opacity:.7; }
+
+  .s-btn-primary { width:100%; padding:13.5px; background:linear-gradient(135deg,var(--accent) 0%,#1a5cb8 100%); border:none; border-radius:var(--r); color:#fff; font-size:15px; font-weight:600; font-family:'Sora',sans-serif; cursor:pointer; letter-spacing:.2px; box-shadow:var(--shadow-btn); transition:transform .22s,box-shadow .22s; position:relative; overflow:hidden; }
+  .s-btn-primary::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.12),transparent); opacity:0; transition:opacity .2s; }
+  .s-btn-primary:hover { transform:translateY(-1px); box-shadow:0 12px 32px rgba(47,111,212,.55); }
+  .s-btn-primary:hover::before { opacity:1; }
+  .s-btn-primary:active { transform:translateY(0); }
+  .s-btn-primary:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+
+  .s-divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+  .s-divider-line { flex:1; height:1px; background:rgba(255,255,255,.07); }
+  .s-divider-text { font-size:12px; color:var(--muted); white-space:nowrap; }
+
+  .s-btn-secondary { width:100%; padding:12px; background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:var(--r); color:rgba(255,255,255,.65); font-size:13.5px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .s-btn-secondary:hover { border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.04); color:#fff; }
+
+  /* social login buttons styling */
+  .s-social-wrap { margin-top:4px; }
+  .s-social-wrap .login-divider { color:var(--muted) !important; font-size:12px; margin:16px 0 !important; }
+  .s-social-wrap .btn-login-option { background:transparent !important; border:1px solid rgba(255,255,255,.1) !important; border-radius:var(--r) !important; color:rgba(255,255,255,.7) !important; font-size:13.5px !important; padding:10px !important; transition:all .2s !important; margin-bottom:8px !important; }
+  .s-social-wrap .btn-login-option:hover { border-color:rgba(255,255,255,.22) !important; background:rgba(255,255,255,.04) !important; color:#fff !important; }
+
+  .s-form-footer { margin-top:24px; text-align:center; font-size:12px; color:rgba(255,255,255,.3); line-height:1.8; }
+  .s-form-footer a { color:rgba(138,155,191,.8); text-decoration:none; transition:color .2s; }
+  .s-form-footer a:hover { color:var(--glow); }
+
+  /* footer */
+  .s-footer { position:relative; z-index:10; border-top:1px solid var(--border); padding:16px 48px; display:flex; align-items:center; justify-content:space-between; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); background:rgba(10,22,40,.6); flex-shrink:0; animation:sU .5s ease .3s both; flex-wrap:wrap; gap:8px; }
+  .s-footer-copy { font-size:12px; color:rgba(138,155,191,.6); }
+  .s-footer-copy strong { color:rgba(255,255,255,.4); font-weight:500; }
+  .s-footer-links { display:flex; gap:18px; flex-wrap:wrap; }
+  .s-footer-links a { font-size:12px; color:rgba(138,155,191,.6); text-decoration:none; transition:color .2s; }
+  .s-footer-links a:hover { color:#fff; }
+
+  @keyframes sD{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sU{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fU{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+  /* tablet */
+  @media(max-width:900px){
+    .s-navbar{padding:0 24px;} .s-nav-center{display:none;}
+    .s-card{max-width:560px;flex-direction:column;}
+    .s-left{padding:36px 32px;border-right:none;border-bottom:1px solid var(--border);}
+    .s-left .s-sub{max-width:100%;}
+    .s-right{width:100%;padding:36px 32px;}
+    .s-footer{padding:14px 24px;}
+  }
+  /* mobile */
+  @media(max-width:600px){
+    .s-navbar{padding:0 16px;} .s-nav-center,.s-nav-right{display:none;}
+    .s-hamburger{display:flex;}
+    .s-card{border-radius:14px;}
+    .s-left{display:none;}
+    .s-right{padding:36px 24px;}
+    .s-footer{padding:14px 16px;justify-content:center;}
+    .s-footer-copy{text-align:center;width:100%;}
+    .s-footer-links{justify-content:center;}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+  @media(prefers-contrast:high){.s-input{border-color:rgba(255,255,255,.4);}.s-btn-primary{background:var(--accent);}}
+</style>
 {% endblock %}
 
-{% macro logo_section(title=null) %}
-<div class="page-card-head">
-	<img class="app-logo" src="{{ logo }}">
-	{% if title %}
-	<h4>{{ _(title)}}</h4>
-	{% else %}
-	<h4>{{ _('Login to {0}').format(app_name or _("SIBYL")) }}</h4>
-	{% endif %}
+{% macro email_login_body() -%}
+{% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
+<div class="s-group">
+  <label class="s-label" for="login_email">{{ login_label or _("Email Address") }}</label>
+  <input type="text" id="login_email" class="s-input form-control"
+    placeholder="{% if login_name_placeholder %}{{ login_name_placeholder }}{% else %}{{ _('you@company.com') }}{% endif %}"
+    required autofocus autocomplete="username" aria-required="true">
 </div>
+<div class="s-group">
+  <label class="s-label" for="login_password">{{ _("Password") }}</label>
+  <div style="position:relative;">
+    <input type="password" id="login_password" class="s-input form-control"
+      placeholder="••••••••••" autocomplete="current-password" required aria-required="true">
+    <span toggle="#login_password" class="toggle-password"
+      style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);cursor:pointer;">
+      {{ _('Show') }}
+    </span>
+  </div>
+</div>
+{% if not disable_user_pass_login %}
+<div class="s-row">
+  <label class="s-check">
+    <input type="checkbox" id="remember_me" aria-label="{{ _('Remember me') }}">
+    <span>{{ _("Remember me") }}</span>
+  </label>
+  <a href="#forgot" class="s-forgot">{{ _("Forgot Password?") }}</a>
+</div>
+{% endif %}
+{% endif %}
+
+<div style="margin-top:4px;">
+  {% if not disable_user_pass_login %}
+  <button class="s-btn-primary btn btn-login" type="submit">{{ _("Sign In") }}</button>
+  {% endif %}
+  {% if ldap_settings and ldap_settings.enabled %}
+  <button class="s-btn-secondary btn btn-login btn-ldap-login" style="margin-top:10px;" type="button">
+    {{ _("Sign in with LDAP") }}
+  </button>
+  {% endif %}
+</div>
+
+{%- if social_login or login_with_email_link -%}
+<div class="s-social-wrap">
+  <div class="s-divider">
+    <div class="s-divider-line"></div>
+    <span class="s-divider-text">{{ _("or continue with") }}</span>
+    <div class="s-divider-line"></div>
+  </div>
+  <div class="social-login-buttons">
+    {% for provider in provider_logins %}
+    <div class="login-button-wrapper">
+      <a href="{{ provider.auth_url }}"
+        class="btn btn-block btn-default btn-sm btn-login-option btn-{{ provider.name }}"
+        style="margin-bottom:8px;">
+        {% if provider.icon %}{{ provider.icon }}{% endif %}
+        {{ _("Sign in with {0}").format(provider.provider_name) }}
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% if login_with_frappe_cloud_url %}
+  <div style="margin-bottom:8px;">
+    <a href="{{ login_with_frappe_cloud_url }}"
+      class="s-btn-secondary btn btn-login-option btn-login-with-frappe-cloud"
+      style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;">
+      <svg width="18" height="14" viewBox="0 5 23 23" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M24.5011 14.1124C23.3954 12.4873 21.532 11.5477 19.594 11.6747C18.7616 10.1384 17.2211 9.12267 15.4198 9.0084C14.1651 8.93222 12.8979 9.3766 11.9165 10.24C11.2456 10.8367 10.7611 11.5223 10.463 12.2968C10.289 12.7539 9.89151 13.0459 9.46912 13.0459H6.5V15.5852H9.46912C10.9226 15.5852 12.2271 14.6584 12.7737 13.2237C12.9227 12.8301 13.1712 12.4873 13.5439 12.1571C14.0284 11.7255 14.662 11.4969 15.2583 11.535C16.1528 11.5985 16.7863 12.0175 17.1839 12.538C17.6063 13.0205 17.8423 13.7696 17.979 14.5187C18.774 14.2902 19.6437 14.0997 20.476 14.2394C21.1593 14.3536 21.7929 14.7218 22.2525 15.2678C22.327 15.3567 22.4016 15.4456 22.4637 15.5471C23.06 16.4232 23.1718 17.5024 22.7743 18.5689C22.414 19.5592 21.0847 20.4607 19.9791 20.4607H11.3326C10.1524 20.4607 9.18339 19.5592 9.03432 18.4038H6.54969C6.71119 20.9686 8.78585 23 11.3326 23H19.9915C22.1283 23 24.3769 21.451 25.1098 19.4704C25.7931 17.6167 25.5695 15.6614 24.5135 14.0997L24.5011 14.1124Z" fill="currentColor"/>
+      </svg>
+      {{ _("Login with Sibyl Cloud") }}
+    </a>
+  </div>
+  {% endif %}
+  {% if login_with_email_link %}
+  <div>
+    <a href="#login-with-email-link"
+      class="s-btn-secondary btn btn-login-option btn-login-with-email-link"
+      style="text-decoration:none;display:flex;align-items:center;justify-content:center;padding:12px;">
+      {{ _("Login with Email Link") }}
+    </a>
+  </div>
+  {% endif %}
+</div>
+{%- endif -%}
 {% endmacro %}
 
 {% block page_content %}
-<!-- {{ for_test }} -->
-<div>
-	<noscript>
-		<div class="text-center my-5">
-			<h4>{{ _("Javascript is disabled on your browser") }}</h4>
-			<p class="text-muted">
-				{{ _("You need to enable JavaScript for your app to work.") }}<br>{{ _("To enable it follow the instructions in the following link: {0}").format("<a href='https://enable-javascript.com/'>enable-javascript.com</a></p>") }}
-		</div>
-	</noscript>
-	<section class='for-login'>
-		{{ logo_section() }}
-		<div class="login-content page-card">
-			<form class="form-signin form-login" role="form">
-				{%- if social_login or login_with_email_link -%}
-				<div class="page-card-body">
-					<form class="form-signin form-login" role="form">
-						{{ email_login_body() }}
-					</form>
-					<div class="social-logins text-center">
-						{% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
-						<p class="text-muted login-divider">{{ _("or") }}</p>
-						{% endif %}
-						<div class="social-login-buttons">
-							{% for provider in provider_logins %}
-							<div class="login-button-wrapper">
-								<a href="{{ provider.auth_url }}"
-									class="btn btn-block btn-default btn-sm btn-login-option btn-{{ provider.name }}">
-									{% if provider.icon %}
-										{{ provider.icon }}
-									{% endif %}
-									{{ _("Login with {0}").format(provider.provider_name) }}</a>
-							</div>
-							{% endfor %}
-						</div>
+<a class="skip-link" href="#login-form">{{ _("Skip to sign in form") }}</a>
 
-						{% if login_with_frappe_cloud_url %}
-						<div class="social-login-buttons">
-							<div class="login-button-wrapper">
-								<a href="{{ login_with_frappe_cloud_url }}"
-									class="btn btn-block btn-default btn-sm btn-login-option btn-login-with-frappe-cloud">
-									<svg class="mr-2" width="24" height="20" viewBox="0 5 23 23" fill="none"
-										xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M24.5011 14.1124C23.3954 12.4873 21.532 11.5477 19.594 11.6747C18.7616 10.1384 17.2211 9.12267 15.4198 9.0084C14.1651 8.93222 12.8979 9.3766 11.9165 10.24C11.2456 10.8367 10.7611 11.5223 10.463 12.2968C10.289 12.7539 9.89151 13.0459 9.46912 13.0459H6.5V15.5852H9.46912C10.9226 15.5852 12.2271 14.6584 12.7737 13.2237C12.9227 12.8301 13.1712 12.4873 13.5439 12.1571C14.0284 11.7255 14.662 11.4969 15.2583 11.535C16.1528 11.5985 16.7863 12.0175 17.1839 12.538C17.6063 13.0205 17.8423 13.7696 17.979 14.5187C18.774 14.2902 19.6437 14.0997 20.476 14.2394C21.1593 14.3536 21.7929 14.7218 22.2525 15.2678C22.327 15.3567 22.4016 15.4456 22.4637 15.5471C23.06 16.4232 23.1718 17.5024 22.7743 18.5689C22.414 19.5592 21.0847 20.4607 19.9791 20.4607H11.3326C10.1524 20.4607 9.18339 19.5592 9.03432 18.4038H6.54969C6.71119 20.9686 8.78585 23 11.3326 23H19.9915C22.1283 23 24.3769 21.451 25.1098 19.4704C25.7931 17.6167 25.5695 15.6614 24.5135 14.0997L24.5011 14.1124Z"
-											fill="currentColor" />
-									</svg>
-									{{ _("Login with Sibyl Cloud") }}</a>
-							</div>
-						</div>
-						{% endif %}
+<div class="bg-layer" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
 
-						{% if login_with_email_link %}
-						<div class="login-with-email-link social-login-buttons">
-							<div class="login-button-wrapper">
-								<a href="#login-with-email-link"
-									class="btn btn-block btn-default btn-sm btn-login-option btn-login-with-email-link">
-									{{ _("Login with Email Link") }}</a>
-							</div>
-						</div>
-						{% endif %}
-					</div>
-				</div>
-				{% else %}
-					{{ email_login_body() }}
-				{%- endif -%}
-			</form>
-		</div>
-		{%- if not disable_signup and not disable_user_pass_login -%}
-		<div class="text-center sign-up-message">
-			{{ _("Don't have an account?") }}
-			<a href="#signup">{{ _("Sign up") }}</a>
-		</div>
-		{%- endif -%}
-	</section>
+<!-- NAVBAR -->
+<header role="banner">
+  <nav class="s-navbar" role="navigation" aria-label="{{ _('Main navigation') }}">
+    <a href="https://sibyl.pk" class="s-brand" aria-label="SIBYLERP" rel="home">
+      <img
+        src="/assets/frappe/images/logo-small-light.png"
+        alt="SIBYLERP"
+        class="s-brand-logo"
+        width="32" height="32"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+      >
+      <div class="s-brand-fallback" aria-hidden="true">S</div>
+      <span class="s-brand-name">SIBYL<em>ERP</em></span>
+    </a>
+    <div class="s-nav-center" role="menubar">
+      <a href="https://docs.sibyl.pk" class="s-nav-link" role="menuitem">{{ _("Documentation") }}</a>
+      <a href="https://sibyl.pk/support" class="s-nav-link" role="menuitem">{{ _("Support") }}</a>
+    </div>
+    <div class="s-nav-right">
+      <a href="https://sibyl.pk/products" class="s-nav-btn" rel="noopener" target="_blank" aria-label="{{ _('Explore all Sibyl products') }}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        {{ _("Our Products") }}
+      </a>
+    </div>
+    <button class="s-hamburger" aria-label="{{ _('Toggle navigation') }}" aria-expanded="false" aria-controls="s-mobile-menu" onclick="sToggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="s-mobile-menu" id="s-mobile-menu" role="menu">
+    <a href="https://docs.sibyl.pk" role="menuitem">{{ _("Documentation") }}</a>
+    <a href="https://sibyl.pk/support" role="menuitem">{{ _("Support") }}</a>
+    <a href="https://sibyl.pk/products" role="menuitem">{{ _("Our Products") }}</a>
+  </div>
+</header>
 
-	{%- if social_login -%}
-	<section class='for-email-login'>
-		{{ logo_section() }}
-		<div class="login-content page-card">
-			<form class="form-signin form-login" role="form">
-			{{ email_login_body() }}
-			</form>
-		</div>
-		{%- if not disable_signup and not disable_user_pass_login -%}
-		<div class="text-center sign-up-message">
-			{{ _("Don't have an account?") }}
-			<a href="#signup">{{ _("Sign up") }}</a>
-		</div>
-		{%- endif -%}
-	</section>
-	{%- endif -%}
-	<section class='for-signup {{ "signup-disabled" if disable_signup else "" }}'>
-		{{ logo_section(_('Create a {0} Account').format(app_name or _("SIBYL"))) }}
-		<div class="login-content page-card">
-			{%- if not disable_signup -%}
-			{{ signup_form_template }}
-			{%- else -%}
-			<div class='page-card-head mb-2'>
-				<span class='indicator gray'>{{_("Signup Disabled")}}</span>
-				<p class="text-muted text-normal sign-up-message mt-1 mb-8">{{_("Signups have been disabled for this website.")}}</p>
-				<div><a href='/' class='btn btn-primary btn-md'>{{ _("Home") }}</a></div>
-			</div>
-			{%- endif -%}
-		</div>
+<!-- MAIN -->
+<main class="s-main" role="main" id="main-content">
+  <div class="s-card" role="region" aria-label="{{ _('Sign in to SIBYLERP') }}">
 
-	</section>
+    <!-- Left panel -->
+    <aside class="s-left" aria-label="{{ _('About SIBYLERP') }}">
+      <div class="s-badge">{{ _("Enterprise ERP Platform") }}</div>
+      <h1 class="s-heading">{{ _("Run your business") }}<br>{{ _("with") }} <em>{{ _("precision") }}</em></h1>
+      <p class="s-sub">{{ _("SIBYLERP brings together finance, operations, HR, and inventory — in one unified, intelligent platform built for Pakistani enterprises.") }}</p>
+      <ul class="s-features" aria-label="{{ _('Key features') }}">
+        <li class="s-feature"><div class="s-dot" aria-hidden="true">📊</div>{{ _("Real-time financial reporting") }}</li>
+        <li class="s-feature"><div class="s-dot" aria-hidden="true">⚙️</div>{{ _("Automated operations & workflows") }}</li>
+        <li class="s-feature"><div class="s-dot" aria-hidden="true">👥</div>{{ _("HR, payroll & leave management") }}</li>
+        <li class="s-feature"><div class="s-dot" aria-hidden="true">🔒</div>{{ _("Role-based access & audit trails") }}</li>
+      </ul>
+    </aside>
 
-	<section class='for-forgot'>
-		{{ logo_section('Forgot Password') }}
-		<div class="login-content page-card">
-			<form class="form-signin form-forgot hide" role="form">
-				<div class="page-card-body">
-					<div class="email-field">
-						<input type="email" id="forgot_email" class="form-control"
-							placeholder="{{ _('Email Address') }}" required autofocus autocomplete="username">
-						<svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-							<use class="es-lock" href="#es-line-email"></use>
-						</svg>
+    <!-- Right form panel -->
+    <section class="s-right" aria-labelledby="s-form-heading">
+      <!-- LOGIN SECTION -->
+      <section class="for-login">
+        <div class="s-form-head">
+          <h2 class="s-form-title" id="s-form-heading">{{ _("Welcome") }}</h2>
+          <p class="s-form-sub">{{ _("Sign in to your SIBYLERP account") }}</p>
+        </div>
+        <div id="login-form">
+          <form class="form-signin form-login" role="form" novalidate>
+            {{ email_login_body() }}
+          </form>
+        </div>
+        {%- if not disable_signup and not disable_user_pass_login -%}
+        <div class="s-form-footer">
+          {{ _("Don't have an account?") }} <a href="#signup">{{ _("Sign up") }}</a>
+        </div>
+        {%- endif -%}
+      </section>
 
-					</div>
-				</div>
-				<div class="page-card-actions">
-					<button class="btn btn-sm btn-primary btn-block btn-forgot"
-						type="submit">{{ _("Reset Password") }}</button>
-					<p class="text-center sign-up-message">
-						<a href="#login">{{ _("Back to Login") }}</a>
-					</p>
-				</div>
+      <!-- SIGNUP SECTION -->
+      <section class="for-signup {{ 'signup-disabled' if disable_signup else '' }}" style="display:none;">
+        <div class="s-form-head">
+          <h2 class="s-form-title">{{ _('Create a {0} Account').format(app_name or _("SIBYLERP")) }}</h2>
+          <p class="s-form-sub">{{ _("Join your team on SIBYLERP") }}</p>
+        </div>
+        {%- if not disable_signup -%}
+        {{ signup_form_template }}
+        {%- else -%}
+        <div style="text-align:center;padding:20px 0;">
+          <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">{{ _("Signups have been disabled for this website.") }}</p>
+          <a href="/" class="s-btn-primary" style="display:inline-block;text-decoration:none;padding:12px 28px;width:auto;">{{ _("Home") }}</a>
+        </div>
+        {%- endif -%}
+      </section>
 
-			</form>
-		</div>
-	</section>
+      <!-- FORGOT PASSWORD SECTION -->
+      <section class="for-forgot" style="display:none;">
+        <div class="s-form-head">
+          <h2 class="s-form-title">{{ _("Forgot Password") }}</h2>
+          <p class="s-form-sub">{{ _("We'll send you a reset link") }}</p>
+        </div>
+        <form class="form-signin form-forgot" role="form" novalidate>
+          <div class="s-group">
+            <label class="s-label" for="forgot_email">{{ _("Email Address") }}</label>
+            <input type="email" id="forgot_email" class="s-input form-control"
+              placeholder="{{ _('you@company.com') }}" required autofocus autocomplete="username">
+          </div>
+          <button class="s-btn-primary btn btn-forgot" type="submit">{{ _("Reset Password") }}</button>
+          <p style="text-align:center;margin-top:16px;">
+            <a href="#login" class="s-forgot">{{ _("Back to Sign In") }}</a>
+          </p>
+        </form>
+      </section>
 
-	<section class='for-login-with-email-link'>
-			{{ logo_section(_('Login with Email Link')) }}
-		<div class="login-content page-card">
-			<form class="form-signin form-login-with-email-link hide" role="form">
-				<div class="page-card-body">
-					<div class="email-field">
-						<input type="email" id="login_with_email_link_email" class="form-control"
-							placeholder="{{ _('Email Address') }}" required autofocus autocomplete="username">
-						<svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-							<use class="es-lock" href="#es-line-email"></use>
-						</svg>
-					</div>
-				</div>
-				<div class="page-card-actions">
-					<button class="btn btn-sm btn-primary btn-block btn-login-with-email-link"
-						type="submit">{{ _("Send login link") }}</button>
-					<p class="text-center sign-up-message">
-						<a href="#login">{{ _("Back to Login") }}</a>
-					</p>
-				</div>
-			</form>
-		</div>
-	</section>
-</div>
+      <!-- EMAIL LINK SECTION -->
+      <section class="for-login-with-email-link" style="display:none;">
+        <div class="s-form-head">
+          <h2 class="s-form-title">{{ _("Login with Email Link") }}</h2>
+          <p class="s-form-sub">{{ _("We'll send you a magic link") }}</p>
+        </div>
+        <form class="form-signin form-login-with-email-link" role="form" novalidate>
+          <div class="s-group">
+            <label class="s-label" for="login_with_email_link_email">{{ _("Email Address") }}</label>
+            <input type="email" id="login_with_email_link_email" class="s-input form-control"
+              placeholder="{{ _('you@company.com') }}" required autofocus autocomplete="username">
+          </div>
+          <button class="s-btn-primary btn btn-login-with-email-link" type="submit">{{ _("Send Login Link") }}</button>
+          <p style="text-align:center;margin-top:16px;">
+            <a href="#login" class="s-forgot">{{ _("Back to Sign In") }}</a>
+          </p>
+        </form>
+      </section>
+
+      <!-- FORM FOOTER -->
+      <div class="s-form-footer" style="margin-top:28px;">
+        {{ _("Need access?") }} <a href="mailto:support@sibyl.pk">{{ _("Contact your administrator") }}</a><br><br>
+        {{ _("Powered by") }} <a href="https://sibyl.pk" rel="noopener" target="_blank">SIBYLERP</a>
+        &nbsp;·&nbsp;<a href="https://sibyl.pk/privacy" rel="noopener">{{ _("Privacy") }}</a>
+        &nbsp;·&nbsp;<a href="https://sibyl.pk/terms" rel="noopener">{{ _("Terms") }}</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="s-footer" role="contentinfo">
+  <div class="s-footer-copy">
+    © 2025 <strong>Sibyl Technologies.</strong> {{ _("All rights reserved.") }}
+  </div>
+  <nav class="s-footer-links" aria-label="{{ _('Footer navigation') }}">
+    <a href="https://sibyl.pk/privacy" rel="noopener">{{ _("Privacy Policy") }}</a>
+    <a href="https://sibyl.pk/terms" rel="noopener">{{ _("Terms of Service") }}</a>
+    <a href="https://sibyl.pk/support" rel="noopener">{{ _("Support") }}</a>
+    <a href="https://sibyl.pk" rel="noopener">sibyl.pk</a>
+  </nav>
+</footer>
+
+<script>
+  function sToggleMenu(btn){
+    var m=document.getElementById('s-mobile-menu');
+    var open=m.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open);
+  }
+  document.addEventListener('click',function(e){
+    var m=document.getElementById('s-mobile-menu');
+    var b=document.querySelector('.s-hamburger');
+    if(m&&b&&!m.contains(e.target)&&!b.contains(e.target)){
+      m.classList.remove('open'); b.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      var m=document.getElementById('s-mobile-menu');
+      var b=document.querySelector('.s-hamburger');
+      if(m) m.classList.remove('open');
+      if(b) b.setAttribute('aria-expanded','false');
+    }
+  });
+</script>
 {% endblock %}
 
 {% block script %}
 <script>{% include "templates/includes/login/login.js" %}</script>
 {% endblock %}
-
-{% block sidebar %}{% endblock %}
