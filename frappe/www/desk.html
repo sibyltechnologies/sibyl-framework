@@ -2,11 +2,8 @@
 <html data-theme-mode="{{ desk_theme.lower() }}" data-theme="{{ desk_theme.lower() }}" dir={{ layout_direction }} lang="{{ lang }}">
 	<head>
 		<meta charset="UTF-8">
-		<!-- Chrome, Firefox OS and Opera -->
 		<meta name="theme-color" content="#0089FF">
-		<!-- Windows Phone -->
 		<meta name="msapplication-navbutton-color" content="#0089FF">
-		<!-- iOS Safari -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="#0089FF">
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
@@ -21,10 +18,12 @@
 			href="{{ favicon or "/assets/frappe/images/sibyl-favicon.png" }}" type="image/x-icon">
 		<link rel="icon"
 			href="{{ favicon or "/assets/frappe/images/sibyl-favicon.png" }}" type="image/x-icon">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
 		{% for include in app_include_css -%}
 		{{ include_style(include) }}
 		{%- endfor -%}
-
 		{% if lang == "eo" %}
 		<script type="text/javascript">
 			var _jipt = [];
@@ -32,6 +31,527 @@
 		</script>
 		<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
 		{% endif %}
+		<style id="sibylerp-desk-theme">
+
+/* ── Tokens ─────────────────────────────────────────────────────────────── */
+:root {
+  --s-bg:          #07101f;
+  --s-surface:     #0d1a30;
+  --s-surface-2:   #112040;
+  --s-border:      rgba(255,255,255,0.07);
+  --s-border-h:    rgba(255,255,255,0.14);
+  --s-accent:      #4f8ef7;
+  --s-accent-glow: rgba(79,142,247,0.22);
+  --s-text:        #e2eaf6;
+  --s-muted:       #7a93b8;
+  --s-r:           12px;
+  --s-r-lg:        18px;
+  --s-shadow:      0 4px 24px rgba(0,0,0,0.45);
+  --s-glow:        0 8px 32px rgba(79,142,247,0.18);
+}
+
+/* ── Page ───────────────────────────────────────────────────────────────── */
+body {
+  background: var(--s-bg) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  color: var(--s-text) !important;
+}
+
+.desktop-wrapper {
+  background: var(--s-bg) !important;
+  min-height: 100vh;
+}
+
+/* ── Navbar ─────────────────────────────────────────────────────────────── */
+.desktop-navbar.navbar {
+  background: rgba(7,16,31,0.88) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid var(--s-border) !important;
+  box-shadow: none !important;
+  height: 56px !important;
+  padding: 0 28px !important;
+}
+
+/* Navbar logo — never filter/invert */
+.desktop-navbar .navbar-home img,
+.navbar-brand img {
+  height: 28px !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+.desktop-navbar .navbar-brand-name,
+.desktop-navbar .site-name {
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.04em !important;
+  color: #fff !important;
+}
+
+/* ── Search ─────────────────────────────────────────────────────────────── */
+.desktop-search-wrapper {
+  background: var(--s-surface-2) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: 8px !important;
+  transition: border-color .2s, box-shadow .2s !important;
+}
+.desktop-search-wrapper:hover,
+.desktop-search-wrapper:focus-within {
+  border-color: var(--s-accent) !important;
+  box-shadow: 0 0 0 3px var(--s-accent-glow) !important;
+}
+.btn-reset.desktop-navbar-modal-search {
+  background: transparent !important;
+  color: var(--s-muted) !important;
+  border: none !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13px !important;
+}
+.desktop-search-icon svg {
+  color: var(--s-muted) !important;
+  fill: var(--s-muted) !important;
+}
+.desktop-keyboard-shortcut {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: 4px !important;
+  color: var(--s-muted) !important;
+  font-size: 11px !important;
+  padding: 1px 6px !important;
+}
+
+/* ── Nav icons ──────────────────────────────────────────────────────────── */
+.desktop-notifications .nav-link,
+.desktop-avatar .nav-link {
+  color: var(--s-muted) !important;
+  transition: color .2s !important;
+}
+.desktop-notifications .nav-link:hover,
+.desktop-avatar .nav-link:hover {
+  color: #fff !important;
+}
+.desktop-notifications .nav-link svg,
+.desktop-avatar .nav-link svg {
+  fill: currentColor !important;
+}
+
+.dropdown-notifications .dropdown-menu {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r-lg) !important;
+  box-shadow: var(--s-shadow) !important;
+  color: var(--s-text) !important;
+}
+.dropdown-notifications .notification-list-header {
+  border-bottom: 1px solid var(--s-border) !important;
+  padding: 14px 18px !important;
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--s-text) !important;
+}
+.dropdown-notifications .notification-list-body {
+  background: var(--s-surface) !important;
+}
+
+/* ── Desktop container ──────────────────────────────────────────────────── */
+.desktop-container {
+  background: var(--s-bg) !important;
+  padding: 40px 48px 80px !important;
+}
+
+.icons-container .icons {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+}
+
+.desktop-container > .icons-container > .icons {
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 20px !important;
+}
+
+.icon-container.folder-icon .icons-container .icons {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2px !important;
+}
+
+/* ── Icon cards ─────────────────────────────────────────────────────────── */
+.desktop-icon {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 18px 12px 14px !important;
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r-lg) !important;
+  cursor: pointer !important;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease !important;
+  text-decoration: none !important;
+  animation: s-iconIn .38s ease both !important;
+}
+.desktop-icon:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  background: var(--s-surface-2) !important;
+  border-color: var(--s-border-h) !important;
+  box-shadow: var(--s-glow) !important;
+  text-decoration: none !important;
+}
+
+/* stagger */
+.desktop-icon:nth-child(1)  { animation-delay: .04s !important }
+.desktop-icon:nth-child(2)  { animation-delay: .07s !important }
+.desktop-icon:nth-child(3)  { animation-delay: .10s !important }
+.desktop-icon:nth-child(4)  { animation-delay: .13s !important }
+.desktop-icon:nth-child(5)  { animation-delay: .16s !important }
+.desktop-icon:nth-child(6)  { animation-delay: .19s !important }
+.desktop-icon:nth-child(7)  { animation-delay: .22s !important }
+.desktop-icon:nth-child(8)  { animation-delay: .25s !important }
+.desktop-icon:nth-child(9)  { animation-delay: .28s !important }
+.desktop-icon:nth-child(10) { animation-delay: .31s !important }
+.desktop-icon:nth-child(11) { animation-delay: .34s !important }
+.desktop-icon:nth-child(12) { animation-delay: .37s !important }
+.desktop-icon:nth-child(13) { animation-delay: .40s !important }
+.desktop-icon:nth-child(14) { animation-delay: .43s !important }
+.desktop-icon:nth-child(15) { animation-delay: .46s !important }
+.desktop-icon:nth-child(16) { animation-delay: .49s !important }
+.desktop-icon:nth-child(17) { animation-delay: .52s !important }
+.desktop-icon:nth-child(18) { animation-delay: .55s !important }
+.desktop-icon:nth-child(19) { animation-delay: .58s !important }
+.desktop-icon:nth-child(20) { animation-delay: .61s !important }
+
+@keyframes s-iconIn {
+  from { opacity:0; transform: translateY(14px) }
+  to   { opacity:1; transform: translateY(0) }
+}
+
+/* ── Icon image container ───────────────────────────────────────────────── */
+.desktop-icon .icon-container {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  transition: transform .22s ease !important;
+  background-color: #2a3f6a;
+}
+.desktop-icon:hover .icon-container {
+  transform: scale(1.06) !important;
+}
+
+/* FIX: Block Frappe 16 dark-mode filter from whitening icons */
+.desktop-icon .icon-container img,
+.desktop-icon .icon-container svg,
+.desktop-icon .icon-container .app-icon,
+.desktop-icon .icon-container .icon-wrapper,
+.desktop-icon .icon-container [class*="icon"] {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+.desktop-icon:hover .icon-container img,
+.desktop-icon:hover .icon-container svg,
+.desktop-icon:hover .icon-container .app-icon,
+.desktop-icon:hover .icon-container .icon-wrapper,
+.desktop-icon:hover .icon-container [class*="icon"] {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+.desktop-icon .icon-container .app-icon {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+}
+
+.desktop-alphabet {
+  width: 28px !important;
+  height: 28px !important;
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+/* ── Folder popup / group popup ─────────────────────────────────────────── */
+.desktop-icon-group,
+.icon-group,
+.folder-group,
+.desktop-group,
+[class*="icon-group"],
+[class*="folder-popup"],
+[class*="desktop-popup"] {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r-lg) !important;
+  box-shadow: var(--s-shadow) !important;
+  padding: 16px !important;
+}
+.desktop-icon-group .icons,
+.icon-group .icons,
+.folder-group .icons,
+[class*="icon-group"] .icons,
+[class*="folder-popup"] .icons,
+[class*="desktop-popup"] .icons {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 12px !important;
+}
+.desktop-icon-group .desktop-icon,
+[class*="icon-group"] .desktop-icon,
+[class*="folder-popup"] .desktop-icon {
+  animation: none !important;
+  padding: 12px 8px 10px !important;
+}
+
+/* ── Folder icon ────────────────────────────────────────────────────────── */
+.desktop-icon .icon-container.folder-icon {
+  padding: 5px !important;
+}
+.folder-icon .icons-container .icons {
+  gap: 2px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3,1fr) !important;
+}
+.folder-icon .desktop-icon {
+  padding: 2px !important;
+  background: transparent !important;
+  border: none !important;
+  animation: none !important;
+  border-radius: 3px !important;
+}
+.folder-icon .desktop-icon:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+.folder-icon .desktop-icon .icon-container {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 3px !important;
+  border: none !important;
+}
+.folder-icon .desktop-icon .icon-container .app-icon {
+  width: 10px !important;
+  height: 10px !important;
+  opacity: .85 !important;
+}
+
+/* ── Per-module accent glow ─────────────────────────────────────────────── */
+.desktop-icon[data-id="Accounting"]:hover,
+.desktop-icon[data-id="Invoicing"]:hover,
+.desktop-icon[data-id="Payments"]:hover,
+.desktop-icon[data-id="Budget"]:hover,
+.desktop-icon[data-id="Financial Reports"]:hover,
+.desktop-icon[data-id="Banking"]:hover {
+  box-shadow: 0 8px 32px rgba(52,211,153,0.18) !important;
+}
+.desktop-icon[data-id="Stock"]:hover,
+.desktop-icon[data-id="Buying"]:hover,
+.desktop-icon[data-id="Selling"]:hover,
+.desktop-icon[data-id="Subcontracting"]:hover,
+.desktop-icon[data-id="Assets"]:hover {
+  box-shadow: 0 8px 32px rgba(59,130,246,0.18) !important;
+}
+.desktop-icon[data-id="People"]:hover,
+.desktop-icon[data-id="Payroll"]:hover,
+.desktop-icon[data-id="Leaves"]:hover,
+.desktop-icon[data-id="Tenure"]:hover,
+.desktop-icon[data-id="Recruitment"]:hover,
+.desktop-icon[data-id="Shift & Attendance"]:hover {
+  box-shadow: 0 8px 32px rgba(236,72,153,0.18) !important;
+}
+.desktop-icon[data-id="Manufacturing"]:hover,
+.desktop-icon[data-id="Quality"]:hover {
+  box-shadow: 0 8px 32px rgba(139,92,246,0.18) !important;
+}
+.desktop-icon[data-id="Projects"]:hover,
+.desktop-icon[data-id="Performance"]:hover {
+  box-shadow: 0 8px 32px rgba(245,158,11,0.18) !important;
+}
+.desktop-icon[data-id="Expenses"]:hover,
+.desktop-icon[data-id="Tax & Benefits"]:hover {
+  box-shadow: 0 8px 32px rgba(249,115,22,0.18) !important;
+}
+.desktop-icon[data-id="Marley Health"]:hover {
+  box-shadow: 0 8px 32px rgba(20,184,166,0.18) !important;
+}
+
+/* ── Caption / title ────────────────────────────────────────────────────── */
+/*
+  Frappe 16 renders .icon-caption as a flex row by default.
+  We override to column + center so text stacks and centers correctly.
+  The JS below also applies this inline to handle Vue re-renders.
+*/
+.desktop-icon .icon-caption {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+.desktop-icon .icon-title {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--s-text) !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 90px !important;
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+}
+.desktop-icon .icon-subtitle {
+  font-size: 10px !important;
+  color: var(--s-muted) !important;
+  margin-top: 2px !important;
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* ── Hide/remove button ──────────────────────────────────────────────────
+   Hidden by default — completely removed from layout.
+   ONLY shown when body has .edit-mode (set by Frappe when user clicks
+   Customize on the desk). Never shown on hover outside of edit mode.
+────────────────────────────────────────────────────────────────────────── */
+.desktop-icon .hide-button {
+  display: none !important;
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  background: rgba(255,255,255,0.12) !important;
+  border-radius: 50% !important;
+  width: 22px !important;
+  height: 22px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: background .15s !important;
+  border: none !important;
+  padding: 0 !important;
+}
+body.edit-mode .desktop-icon .hide-button {
+  display: flex !important;
+}
+body.edit-mode .desktop-icon:hover .hide-button {
+  background: rgba(255,80,80,0.55) !important;
+}
+.desktop-icon .hide-button svg {
+  color: #fff !important;
+  fill: #fff !important;
+  pointer-events: none !important;
+}
+
+/* ── Edit mode buttons ──────────────────────────────────────────────────── */
+.edit-mode-buttons {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r) !important;
+  box-shadow: var(--s-shadow) !important;
+}
+.edit-mode-buttons .btn-default.discard {
+  background: transparent !important;
+  border: 1px solid var(--s-border) !important;
+  color: var(--s-muted) !important;
+  border-radius: 8px !important;
+}
+.edit-mode-buttons .btn-primary.save {
+  background: linear-gradient(135deg,#3b6fd4,#2554b8) !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 12px rgba(59,111,212,0.40) !important;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+.desktop-wrapper ::-webkit-scrollbar { width:6px; height:6px }
+.desktop-wrapper ::-webkit-scrollbar-track { background: var(--s-bg) }
+.desktop-wrapper ::-webkit-scrollbar-thumb { background: var(--s-surface-2); border-radius:3px }
+.desktop-wrapper ::-webkit-scrollbar-thumb:hover { background: var(--s-muted) }
+
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce) {
+  .desktop-icon { animation:none !important; transition:none !important }
+  .desktop-icon:hover { transform:none !important }
+  .desktop-icon:hover .icon-container { transform:none !important }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.sibylerp-footer {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 42px !important;
+  background: rgba(7,16,31,0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-top: 1px solid var(--s-border) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 28px !important;
+  z-index: 100 !important;
+}
+.sibylerp-footer .s-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--s-muted);
+  font-family: 'DM Sans', sans-serif;
+}
+.sibylerp-footer .s-footer-left span.s-dot { color: var(--s-border-h); }
+.sibylerp-footer .s-footer-left a {
+  color: var(--s-muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.sibylerp-footer .s-footer-left a:hover { color: var(--s-accent); }
+.sibylerp-footer .s-footer-right {
+  font-size: 11px;
+  color: var(--s-muted);
+  font-family: 'DM Sans', sans-serif;
+}
+.sibylerp-footer .s-footer-right strong {
+  color: var(--s-text);
+  font-weight: 600;
+  font-family: 'Sora', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .desktop-container > .icons-container > .icons {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+@media (max-width: 800px) {
+  .desktop-container { padding: 24px 20px 70px !important }
+  .desktop-container > .icons-container > .icons {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 500px) {
+  .desktop-container > .icons-container > .icons {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+		</style>
 	</head>
 	<body>
 		{% include "templates/includes/splash_screen.html" %}
@@ -42,36 +562,130 @@
 		</div>
 		<div id="all-symbols" style="display:none"></div>
 		<div id="build-events-overlay"></div>
-
 		<script type="text/javascript">
 			window._version_number = "{{ build_version }}";
-			// browser support
 			window.app = true;
 			window.dev_server = {{ dev_server }};
-
 			if (!window.frappe) window.frappe = {};
-
 			frappe.boot = {{ frappe.utils.orjson_dumps(boot, default=frappe.json_handler) }};
 			frappe._messages = frappe.boot["__messages"];
 			frappe.csrf_token = "{{ csrf_token }}";
-
-
 		</script>
-
 		{%- for path in app_include_icons -%}
 		{{ include_icons(path) }}
 		{%- endfor -%}
-
-	{% for include in app_include_js %}
-	{{ include_script(include) }}
-	{% endfor %}
-
-	{% include "templates/includes/app_analytics/google_analytics.html" %}
-
+		{% for include in app_include_js %}
+		{{ include_script(include) }}
+		{% endfor %}
+		{% include "templates/includes/app_analytics/google_analytics.html" %}
 		{% for sound in (sounds or []) %}
 		<audio preload="auto" id="sound-{{ sound.name }}" volume={{ sound.volume or 1 }}>
 			<source src="{{ sound.src }}"></source>
 		</audio>
 		{% endfor %}
+		<script>
+		(function () {
+
+			/* ── Footer ──────────────────────────────────────────────────── */
+			function injectFooter() {
+				if (document.querySelector('.sibylerp-footer')) return;
+				var el = document.createElement('div');
+				el.className = 'sibylerp-footer';
+				el.innerHTML =
+					'<div class="s-footer-left">' +
+						'<span>\u00A9 ' + new Date().getFullYear() + ' SibylERP</span>' +
+						'<span class="s-dot">\u00B7</span>' +
+						'<a href="/desk/privacy-policy" target="_blank">Privacy</a>' +
+						'<span class="s-dot">\u00B7</span>' +
+						'<a href="/desk/terms" target="_blank">Terms</a>' +
+						'<span class="s-dot">\u00B7</span>' +
+						'<a href="mailto:support@sibylerp.com">Support</a>' +
+					'</div>' +
+					'<div class="s-footer-right">Powered by <strong>SibylERP</strong></div>';
+				document.body.appendChild(el);
+			}
+
+			/* ── Fix title centering ─────────────────────────────────────
+			   Frappe 16's Vue component renders .icon-caption as a flex
+			   row and .icon-title as a bare <span>. CSS text-align on a
+			   flex child only works when the flex axis is correct.
+			   Safest fix: force inline styles directly on each element
+			   after every render cycle so Vue can't undo them.
+			──────────────────────────────────────────────────────────────── */
+			function fixTitles() {
+				document.querySelectorAll('.desktop-icon .icon-caption').forEach(function (cap) {
+					cap.style.display        = 'flex';
+					cap.style.flexDirection  = 'column';
+					cap.style.alignItems     = 'center';
+					cap.style.textAlign      = 'center';
+					cap.style.width          = '100%';
+				});
+				document.querySelectorAll('.desktop-icon .icon-title').forEach(function (t) {
+					t.style.textAlign = 'center';
+					t.style.display   = 'block';
+					t.style.width     = '100%';
+				});
+				document.querySelectorAll('.desktop-icon .icon-subtitle').forEach(function (s) {
+					s.style.textAlign = 'center';
+					s.style.display   = 'block';
+					s.style.width     = '100%';
+				});
+			}
+
+			/* ── Fix hide button visibility ──────────────────────────────
+			   Frappe 16 toggles .hide-button via its own Vue reactive
+			   state — it may force display:flex via inline style.
+			   We override inline style directly based on edit-mode state,
+			   which wins over any class-based CSS rule.
+			──────────────────────────────────────────────────────────────── */
+			function syncHideButtons() {
+				var inEditMode = document.body.classList.contains('edit-mode');
+				document.querySelectorAll('.desktop-icon .hide-button').forEach(function (btn) {
+					btn.style.setProperty('display', inEditMode ? 'flex' : 'none', 'important');
+				});
+			}
+
+			/* Watch body class changes to catch when Frappe toggles edit mode */
+			new MutationObserver(function (mutations) {
+				mutations.forEach(function (m) {
+					if (m.attributeName === 'class') syncHideButtons();
+				});
+			}).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+			/* Watch DOM for Frappe Vue re-rendering icons */
+			var domObserver = new MutationObserver(function () {
+				fixTitles();
+				syncHideButtons();
+			});
+
+			function startWatching() {
+				var root = document.getElementById('body') ||
+				           document.querySelector('.desktop-wrapper') ||
+				           document.body;
+				domObserver.observe(root, { childList: true, subtree: true });
+			}
+
+			/* Boot */
+			function init() {
+				injectFooter();
+				fixTitles();
+				syncHideButtons();
+				startWatching();
+			}
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', init);
+			} else {
+				init();
+			}
+
+			/* Extra pass after full load for lazy-rendered icons */
+			window.addEventListener('load', function () {
+				setTimeout(function () { fixTitles(); syncHideButtons(); }, 400);
+				setTimeout(function () { fixTitles(); syncHideButtons(); }, 1200);
+			});
+
+		}());
+		</script>
 	</body>
 </html>

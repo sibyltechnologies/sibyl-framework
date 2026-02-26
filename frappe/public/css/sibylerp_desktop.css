@@ -1,0 +1,439 @@
+/*
+ * SibylERP Desktop Page Theme
+ * Targets only desk page classes — safe, no layout breakage
+ * Deploy to: ~/frappe/frappe-bench/apps/frappe/frappe/public/css/sibylerp_desktop.css
+ * Then add to hooks.py: app_include_css = ["/assets/frappe/css/sibylerp_desktop.css"]
+ */
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --s-bg:           #07101f;
+  --s-surface:      #0d1a30;
+  --s-surface-2:    #112040;
+  --s-border:       rgba(255,255,255,0.07);
+  --s-border-h:     rgba(255,255,255,0.14);
+  --s-accent:       #4f8ef7;
+  --s-accent-glow:  rgba(79,142,247,0.25);
+  --s-text:         #e2eaf6;
+  --s-muted:        #7a93b8;
+  --s-white:        #ffffff;
+  --s-r:            12px;
+  --s-r-lg:         18px;
+  --s-shadow:       0 4px 24px rgba(0,0,0,0.45);
+  --s-shadow-glow:  0 8px 32px rgba(79,142,247,0.18);
+}
+
+/* ─── Page Background ───────────────────────────────────────────────────────── */
+body[data-route=""],
+body[data-route^="desktop"] {
+  background: var(--s-bg) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  color: var(--s-text) !important;
+}
+
+/* ─── Desktop Wrapper ───────────────────────────────────────────────────────── */
+.desktop-wrapper {
+  background: var(--s-bg) !important;
+  min-height: 100vh;
+}
+
+/* ─── Navbar ────────────────────────────────────────────────────────────────── */
+.desktop-navbar.navbar {
+  background: rgba(7, 16, 31, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--s-border) !important;
+  box-shadow: 0 1px 0 var(--s-border) !important;
+  padding: 0 24px !important;
+  height: 56px !important;
+}
+
+/* Logo area */
+.desktop-navbar .navbar-home {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.desktop-navbar .navbar-home img,
+.navbar-brand img {
+  filter: brightness(0) invert(1) !important;
+  height: 28px !important;
+}
+
+/* Navbar brand text */
+.desktop-navbar .navbar-brand-name,
+.desktop-navbar .site-name {
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.04em !important;
+  color: var(--s-white) !important;
+}
+
+/* ─── Search Bar ────────────────────────────────────────────────────────────── */
+.desktop-search-wrapper {
+  background: var(--s-surface-2) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: 8px !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.desktop-search-wrapper:hover,
+.desktop-search-wrapper:focus-within {
+  border-color: var(--s-accent) !important;
+  box-shadow: 0 0 0 3px var(--s-accent-glow) !important;
+}
+
+.btn-reset.desktop-navbar-modal-search {
+  background: transparent !important;
+  color: var(--s-muted) !important;
+  border: none !important;
+  padding: 6px 14px !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 13px !important;
+}
+
+.desktop-search-icon svg {
+  color: var(--s-muted) !important;
+  fill: var(--s-muted) !important;
+}
+
+.desktop-keyboard-shortcut {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: 4px !important;
+  color: var(--s-muted) !important;
+  font-size: 11px !important;
+  padding: 1px 6px !important;
+}
+
+/* ─── Notification Button ───────────────────────────────────────────────────── */
+.desktop-notifications .nav-link,
+.desktop-avatar .nav-link {
+  color: var(--s-muted) !important;
+  transition: color 0.2s !important;
+}
+
+.desktop-notifications .nav-link:hover,
+.desktop-avatar .nav-link:hover {
+  color: var(--s-white) !important;
+}
+
+.desktop-notifications .nav-link svg,
+.desktop-avatar .nav-link svg {
+  fill: currentColor !important;
+}
+
+/* Notification dropdown */
+.dropdown-notifications .dropdown-menu {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r-lg) !important;
+  box-shadow: var(--s-shadow) !important;
+  color: var(--s-text) !important;
+}
+
+.dropdown-notifications .notification-list-header {
+  border-bottom: 1px solid var(--s-border) !important;
+  padding: 14px 18px !important;
+  color: var(--s-text) !important;
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.dropdown-notifications .notification-list-body {
+  background: var(--s-surface) !important;
+}
+
+/* ─── Desktop Container (icon grid area) ────────────────────────────────────── */
+.desktop-container {
+  background: var(--s-bg) !important;
+  padding: 40px 48px !important;
+}
+
+/* ─── Icons Container Grid ──────────────────────────────────────────────────── */
+.icons-container > .icons {
+  gap: 20px !important;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+  padding: 0 !important;
+}
+
+/* ─── Desktop Icon Cards ────────────────────────────────────────────────────── */
+.desktop-icon {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 18px 12px 14px !important;
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r-lg) !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease !important;
+  text-decoration: none !important;
+  animation: iconIn 0.4s ease both !important;
+}
+
+.desktop-icon:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  background: var(--s-surface-2) !important;
+  border-color: var(--s-border-h) !important;
+  box-shadow: var(--s-shadow-glow) !important;
+  text-decoration: none !important;
+}
+
+/* Staggered entrance animation */
+.desktop-icon:nth-child(1)  { animation-delay: 0.04s !important; }
+.desktop-icon:nth-child(2)  { animation-delay: 0.07s !important; }
+.desktop-icon:nth-child(3)  { animation-delay: 0.10s !important; }
+.desktop-icon:nth-child(4)  { animation-delay: 0.13s !important; }
+.desktop-icon:nth-child(5)  { animation-delay: 0.16s !important; }
+.desktop-icon:nth-child(6)  { animation-delay: 0.19s !important; }
+.desktop-icon:nth-child(7)  { animation-delay: 0.22s !important; }
+.desktop-icon:nth-child(8)  { animation-delay: 0.25s !important; }
+.desktop-icon:nth-child(9)  { animation-delay: 0.28s !important; }
+.desktop-icon:nth-child(10) { animation-delay: 0.31s !important; }
+.desktop-icon:nth-child(11) { animation-delay: 0.34s !important; }
+.desktop-icon:nth-child(12) { animation-delay: 0.37s !important; }
+
+@keyframes iconIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Icon Container (the image/svg circle) ─────────────────────────────────── */
+.desktop-icon .icon-container {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #1a2f52, #0f1e38) !important;
+  border: 1px solid var(--s-border) !important;
+  transition: background 0.2s !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.desktop-icon:hover .icon-container {
+  background: linear-gradient(135deg, #223868, #152447) !important;
+  border-color: rgba(79,142,247,0.3) !important;
+}
+
+/* App icon image */
+.desktop-icon .icon-container .app-icon {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+  filter: brightness(0) invert(1) saturate(0.9) !important;
+  opacity: 0.92 !important;
+}
+
+.desktop-icon:hover .icon-container .app-icon {
+  opacity: 1 !important;
+}
+
+/* SVG alphabet icon (letter icons) */
+.desktop-alphabet {
+  width: 28px !important;
+  height: 28px !important;
+  color: var(--s-white) !important;
+  fill: var(--s-white) !important;
+  font-family: 'Sora', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* Folder icon (nested grid inside icon-container) */
+.desktop-icon .icon-container.folder-icon {
+  width: 56px !important;
+  height: 56px !important;
+  padding: 4px !important;
+  background: linear-gradient(135deg, #1e2f4e, #0f1e38) !important;
+  overflow: hidden !important;
+}
+
+.folder-icon .icons-container .icons {
+  gap: 2px !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.folder-icon .desktop-icon {
+  padding: 2px !important;
+  background: transparent !important;
+  border: none !important;
+  animation: none !important;
+  border-radius: 3px !important;
+}
+
+.folder-icon .desktop-icon:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.folder-icon .desktop-icon .icon-container {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 3px !important;
+  background: rgba(255,255,255,0.12) !important;
+  border: none !important;
+}
+
+.folder-icon .desktop-icon .icon-container .app-icon {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+/* ─── Per-module gradient tints on hover ─────────────────────────────────────
+   Data-id attribute lets us colour each module distinctly             */
+.desktop-icon[data-id="Accounting"]:hover .icon-container,
+.desktop-icon[data-id="Invoicing"]:hover .icon-container,
+.desktop-icon[data-id="Payments"]:hover .icon-container,
+.desktop-icon[data-id="Budget"]:hover .icon-container {
+  background: linear-gradient(135deg, #0d3d2e, #072a1e) !important;
+  border-color: rgba(52,211,153,0.3) !important;
+}
+
+.desktop-icon[data-id="Stock"]:hover .icon-container,
+.desktop-icon[data-id="Buying"]:hover .icon-container,
+.desktop-icon[data-id="Selling"]:hover .icon-container,
+.desktop-icon[data-id="Subcontracting"]:hover .icon-container {
+  background: linear-gradient(135deg, #0d2f4d, #061e38) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+}
+
+.desktop-icon[data-id="People"]:hover .icon-container,
+.desktop-icon[data-id="Payroll"]:hover .icon-container,
+.desktop-icon[data-id="Leaves"]:hover .icon-container,
+.desktop-icon[data-id="Tenure"]:hover .icon-container,
+.desktop-icon[data-id="Recruitment"]:hover .icon-container {
+  background: linear-gradient(135deg, #3d0d3a, #280823) !important;
+  border-color: rgba(236,72,153,0.3) !important;
+}
+
+.desktop-icon[data-id="Manufacturing"]:hover .icon-container,
+.desktop-icon[data-id="Quality"]:hover .icon-container,
+.desktop-icon[data-id="Assets"]:hover .icon-container {
+  background: linear-gradient(135deg, #2d1060, #1a0840) !important;
+  border-color: rgba(139,92,246,0.3) !important;
+}
+
+.desktop-icon[data-id="Projects"]:hover .icon-container,
+.desktop-icon[data-id="Performance"]:hover .icon-container {
+  background: linear-gradient(135deg, #3d2a08, #281b04) !important;
+  border-color: rgba(245,158,11,0.3) !important;
+}
+
+.desktop-icon[data-id="Expenses"]:hover .icon-container,
+.desktop-icon[data-id="Tax & Benefits"]:hover .icon-container {
+  background: linear-gradient(135deg, #3d1a08, #280f04) !important;
+  border-color: rgba(249,115,22,0.3) !important;
+}
+
+.desktop-icon[data-id="Marley Health"]:hover .icon-container {
+  background: linear-gradient(135deg, #0d3d3a, #072a28) !important;
+  border-color: rgba(20,184,166,0.3) !important;
+}
+
+/* ─── Icon Caption (title + subtitle) ──────────────────────────────────────── */
+.desktop-icon .icon-caption {
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.desktop-icon .icon-title {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--s-text) !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 90px !important;
+}
+
+.desktop-icon .icon-subtitle {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 10px !important;
+  color: var(--s-muted) !important;
+  margin-top: 2px !important;
+}
+
+/* ─── Hide Button (× on each icon) ─────────────────────────────────────────── */
+.desktop-icon .hide-button {
+  display: none;
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  background: rgba(255,255,255,0.1) !important;
+  border-radius: 50% !important;
+  width: 20px !important;
+  height: 20px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.desktop-icon:hover .hide-button,
+body.edit-mode .hide-button {
+  display: flex !important;
+}
+
+.desktop-icon .hide-button svg {
+  color: var(--s-text) !important;
+  fill: var(--s-text) !important;
+}
+
+/* ─── Edit Mode Buttons ─────────────────────────────────────────────────────── */
+.edit-mode-buttons {
+  background: var(--s-surface) !important;
+  border: 1px solid var(--s-border) !important;
+  border-radius: var(--s-r) !important;
+  box-shadow: var(--s-shadow) !important;
+}
+
+.edit-mode-buttons .btn-default.discard {
+  background: transparent !important;
+  border: 1px solid var(--s-border) !important;
+  color: var(--s-muted) !important;
+  border-radius: 8px !important;
+}
+
+.edit-mode-buttons .btn-primary.save {
+  background: linear-gradient(135deg, #3b6fd4, #2554b8) !important;
+  border: none !important;
+  color: var(--s-white) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 12px rgba(59,111,212,0.4) !important;
+}
+
+.edit-mode-buttons .btn-primary.save:hover {
+  background: linear-gradient(135deg, #4f82e8, #3367d6) !important;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+.desktop-wrapper ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.desktop-wrapper ::-webkit-scrollbar-track {
+  background: var(--s-bg);
+}
+.desktop-wrapper ::-webkit-scrollbar-thumb {
+  background: var(--s-surface-2);
+  border-radius: 3px;
+}
+.desktop-wrapper ::-webkit-scrollbar-thumb:hover {
+  background: var(--s-muted);
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .desktop-icon { animation: none !important; transition: none !important; }
+  .desktop-icon:hover { transform: none !important; }
+}
